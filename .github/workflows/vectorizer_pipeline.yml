@@ -1,4 +1,4 @@
-name: Project Chimera Pipeline
+name: Vectorizer Pipeline
 
 on:
   workflow_dispatch:

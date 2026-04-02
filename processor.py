@@ -13,6 +13,9 @@ import xml.etree.ElementTree as ET
 import tempfile
 import ezdxf
 
+BLOCK_SIZE = 21
+C_VAL = 10
+
 def classify_and_preprocess(image_path):
     print(f"Processing {image_path}")
     img = cv2.imread(image_path)
@@ -27,10 +30,12 @@ def classify_and_preprocess(image_path):
 
     if variance > 500: # Threshold for high variance (photo) vs low variance (screenshot)
         print("Classification: High Variance (Photo)")
+        # Smooth out paper grain before thresholding
+        blurred = cv2.GaussianBlur(gray, (5, 5), 0)
         # Denoise & Thresholding
-        denoised = cv2.fastNlMeansDenoising(gray, None, 10, 7, 21)
+        denoised = cv2.fastNlMeansDenoising(blurred, None, 10, 7, 21)
         # Using adaptive thresholding for better preservation of lines
-        processed = cv2.adaptiveThreshold(denoised, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
+        processed = cv2.adaptiveThreshold(denoised, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, BLOCK_SIZE, C_VAL)
     else:
         print("Classification: Low Variance (Screenshot/Digital Art)")
         # Alias Suppression (smooth pixelated edges)
@@ -84,7 +89,7 @@ def create_svg(image, output_svg_path):
         gray = image
 
     # Adaptive Thresholding again on upscaled image for best results
-    binary = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
+    binary = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, BLOCK_SIZE, C_VAL)
 
     # pypotrace requires boolean numpy array, where True is black (foreground)
     # usually threshold makes background 255 (white) and foreground 0 (black)
