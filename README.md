@@ -1,4 +1,4 @@
-# Project Chimera
+# Vectorizer
 
 High-Performance automated Vectorization and OCR Document processing agent.
 
@@ -8,7 +8,7 @@ This repository monitors the `/inputs/` directory for new raster images. It clas
 
 1. Upload your raster images (JPEG, PNG, WEBP, TIFF) into the `/inputs/` directory.
 2. Go to the **Actions** tab in GitHub.
-3. Select the **Project Chimera Pipeline** workflow.
+3. Select the **Vectorizer Pipeline** workflow.
 4. Click **Run workflow** to trigger the processing.
 5. Once the workflow is complete, the generated PDFs will automatically be committed and appear in the `/outputs/` directory.
 

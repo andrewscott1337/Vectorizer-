@@ -1,4 +1,4 @@
-# Agent Definition: Project Chimera (Image-to-Vector Pipeline)
+# Agent Definition: Vectorizer (Image-to-Vector Pipeline)
 
 **Role:** High-Performance automated Vectorization and OCR Document processing agent.
 
@@ -39,7 +39,7 @@ Before vectorizing, the image must be resized to improve tracing resolution.
 * **Algorithm:** We will use OpenCV’s DNN (Deep Neural Network) module to run the `EDSR_x4` super-resolution model. It is computationally lightweight, fast, and generates superior results for line art and text compared to simple interpolation. It transforms a standard screenshot into a high-fidelity input.
 
 #### Step 3: Dual-Track Processing (Text vs. Graphics)
-The single biggest challenge in vectorization is text. A tracer tries to turn "A" into a shape, which looks blurry and isn't searchable. The Chimera Agent solves this by splitting the workload.
+The single biggest challenge in vectorization is text. A tracer tries to turn "A" into a shape, which looks blurry and isn't searchable. The Vectorizer Agent solves this by splitting the workload.
 
 **Track A: OCR (The Text Parser)**
 1. The agent uses **Tesseract OCR** (via `pytesseract`) to scan the upscaled image.
