@@ -227,11 +227,12 @@ if __name__ == "__main__":
 
     # Look for common image formats
     valid_extensions = ("*.jpg", "*.jpeg", "*.png", "*.webp", "*.tiff")
-    files_to_process = []
-
-    for ext in valid_extensions:
-        files_to_process.extend(glob.glob(os.path.join(input_dir, ext)))
-        files_to_process.extend(glob.glob(os.path.join(input_dir, ext.upper())))
+    files_to_process = [
+        f
+        for ext in valid_extensions
+        for pattern in (ext, ext.upper())
+        for f in glob.glob(os.path.join(input_dir, pattern))
+    ]
 
     print(f"Found {len(files_to_process)} files to process.")
 
