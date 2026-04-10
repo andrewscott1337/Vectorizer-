@@ -45,9 +45,6 @@ def classify_and_preprocess(image_path):
 
     return img, processed
 
-if __name__ == "__main__":
-    pass
-
 def upscale_image(img, model_path="EDSR_x4.pb"):
     print("Upscaling image...")
     sr = dnn_superres.DnnSuperResImpl_create()
