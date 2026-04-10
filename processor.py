@@ -9,7 +9,6 @@ from svglib.svglib import svg2rlg
 from reportlab.graphics import renderPDF
 import os
 import glob
-import xml.etree.ElementTree as ET
 import tempfile
 import ezdxf
 
