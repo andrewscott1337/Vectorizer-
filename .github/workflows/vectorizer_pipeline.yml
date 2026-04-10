@@ -30,8 +30,17 @@ jobs:
 
       - name: Download EDSR Model
         run: |
+          EXPECTED_HASH="dd35ce3cae53ecee2d16045e08a932c3e7242d641bb65cb971d123e06904347f"
           if [ ! -f EDSR_x4.pb ]; then
             python -c "import urllib.request; urllib.request.urlretrieve('https://github.com/Saafke/EDSR_Tensorflow/raw/master/models/EDSR_x4.pb', 'EDSR_x4.pb')"
+          fi
+          ACTUAL_HASH=$(sha256sum EDSR_x4.pb | awk '{ print $1 }')
+          if [ "$ACTUAL_HASH" != "$EXPECTED_HASH" ]; then
+            echo "Error: Checksum mismatch for EDSR_x4.pb"
+            echo "Expected: $EXPECTED_HASH"
+            echo "Actual:   $ACTUAL_HASH"
+            rm EDSR_x4.pb
+            exit 1
           fi
 
       - name: Run Core Processing Engine
