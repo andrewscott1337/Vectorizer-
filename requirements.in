@@ -1,0 +1,8 @@
+opencv-python-headless
+opencv-contrib-python-headless
+numpy
+pytesseract
+reportlab
+svglib
+pypotrace
+ezdxf
