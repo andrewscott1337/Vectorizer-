@@ -10,7 +10,7 @@ This repository monitors the `/inputs/` directory for new raster images. It clas
 2. Go to the **Actions** tab in GitHub.
 3. Select the **Vectorizer Pipeline** workflow.
 4. Click **Run workflow** to trigger the processing.
-5. Once the workflow is complete, the generated PDFs will automatically be committed and appear in the `/outputs/` directory.
+5. Once the workflow is complete, you can download the generated PDFs and DXFs from the workflow run's artifacts.
 
 ## Disclaimer
 
