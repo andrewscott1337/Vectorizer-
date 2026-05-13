@@ -201,15 +201,17 @@ def process_file(input_file, output_dir):
         with tempfile.NamedTemporaryFile(suffix=".svg", delete=False) as tmp_svg:
             svg_path = tmp_svg.name
 
-        path = create_svg(upscaled_img, svg_path)
+        try:
+            path = create_svg(upscaled_img, svg_path)
 
-        # Step 4: Assemble PDF & DXF
-        h, w = upscaled_img.shape[:2]
-        assemble_pdf(svg_path, text_data, output_pdf, w, h)
-        create_dxf(path, output_dxf, h)
-
-        # Clean up temp svg
-        os.remove(svg_path)
+            # Step 4: Assemble PDF & DXF
+            h, w = upscaled_img.shape[:2]
+            assemble_pdf(svg_path, text_data, output_pdf, w, h)
+            create_dxf(path, output_dxf, h)
+        finally:
+            # Clean up temp svg
+            if os.path.exists(svg_path):
+                os.remove(svg_path)
         print(f"Successfully created: {output_pdf} and {output_dxf}")
 
     except Exception as e:
