@@ -15,11 +15,21 @@ import ezdxf
 BLOCK_SIZE = 21
 C_VAL = 10
 
+MAX_FILE_SIZE_BYTES = 50 * 1024 * 1024  # 50MB
+MAX_IMAGE_DIMENSION = 10000
+
 def classify_and_preprocess(image_path):
     print(f"Processing {image_path}")
+
+    if os.path.getsize(image_path) > MAX_FILE_SIZE_BYTES:
+        raise ValueError(f"Image file exceeds maximum allowed size: {image_path}")
+
     img = cv2.imread(image_path)
     if img is None:
         raise ValueError(f"Could not read image: {image_path}")
+
+    if img.shape[0] > MAX_IMAGE_DIMENSION or img.shape[1] > MAX_IMAGE_DIMENSION:
+        raise ValueError(f"Image dimensions exceed maximum allowed size: {image_path}")
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
